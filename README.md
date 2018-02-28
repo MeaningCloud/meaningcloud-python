@@ -97,8 +97,7 @@ try:
             print("\nOh no! There was the following error: " + topics_response.getStatusMsg() + "\n")
 
 
-
-    #CLASS API CALL	
+    #CLASS API CALL
     #class_response = meaningcloud.ClassResponse(meaningcloud.ClassRequest(license_key, txt=text, model=model).sendReq())
 
 

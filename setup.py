@@ -13,7 +13,7 @@ setup(
     name='MeaningCloud-python',  
 
    
-    version='1.0.1',  
+    version='1.0.1',
 
    
     description='Official Python SDK for MeaningCloud API', 
@@ -43,8 +43,7 @@ setup(
    
     install_requires=[
 	'requests[security]'
-	
-	], 
+	],
 
     
     extras_require={  

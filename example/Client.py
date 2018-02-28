@@ -60,6 +60,11 @@ try:
     #We are going to make a request to the Language Identification API
     lang_response = meaningcloud.LanguageResponse(meaningcloud.LanguageRequest(license_key, txt=text).sendReq())
 
+
+
+    #We are going to make a request to the Language Identification API
+    lang_response = meaningcloud.LanguageResponse(meaningcloud.LanguageRequest(license_key, txt=text).sendReq())
+
     #If there are no errors in the request, we will use the language detected to make a request to Sentiment and Topics
     if(lang_response.isSuccessful()):
         print("\nThe request to 'Language Identification' finished successfully!\n")
