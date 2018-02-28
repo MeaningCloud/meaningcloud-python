@@ -1,45 +1,3 @@
-# MeaningCloud for Python
-
-This is MeaningCloud's official Python client, designed to enable you to use MeaningCloud's services easily from your own applications.
-
-## MeaningCloud
-
-MeaningCloud is a cloud-based text analytics service that through APIs allows you extract meaning from all kind of unstructured content: social conversation, articles, documents... You can check our demos here: https://www.meaningcloud.com/demos
-
-The different APIs provide easy access to many NLP tasks such as automatic classification, sentiment analysis, topic extraction, etc. To be able to use the service you just have to log into MeaningCloud (by registering or using other services to log in: https://www.meaningcloud.com/developer/login), and you will receive a license key associated to a basic Free plan.
-
-You can read more about the plans and the features available here: https://www.meaningcloud.com/products/pricing
-
-
-## Getting started
-
-### Installation
-
-You can load meaningcloud-python into your project by using:
-```
-pip install MeaningCloud-python
-```
-
-You can also clone the code and type the following on your shell:
-
-``` 
-python setup.py install
-```
-
-### Configuration
-
-The only thing you need to start using MeaningCloud's APIs is to log into MeaningCloud (by registering or using other services to log in). Once you've done that, you will be given a license key (https://www.meaningcloud.com/developer/account/subscription). Copy it and paste it in the corresponding place in the code, select the API you want to use and the parameters you want to use, and that's it.
-
-You can find all the technical documentation about the APIs in the API section of the website: https://www.meaningcloud.com/developer/apis
-
-And we are always available at support@meaningcloud.com
-
-
-### Usage
-
-This is an example on how to use this client (also included in the _bin_ folder):
-
-```python
 #! /usr/bin/env python
 
 # Created by MeaningCloud Support Team
@@ -117,5 +75,3 @@ try:
 except ValueError:
     e = sys.exc_info()[0]
     print("\nException: " + str(e))
-
-```
