@@ -3,7 +3,7 @@ import meaningcloud.Request
 
 class ClassRequest(meaningcloud.Request):
 
-    URL = 'http://api.meaningcloud.com/class-1.1'
+    URL = 'https://api.meaningcloud.com/class-1.1'
     otherparams = None
     extraheaders = None
     type_ = ""
@@ -12,13 +12,13 @@ class ClassRequest(meaningcloud.Request):
     # @param string url URL of the API against which the request will be made
     # @param string key license key
     # @param string txt . Text to use in the API calls
-    # @param string url . Text to use in the API calls
-    # @param string doc . Text to use in the API calls
+    # @param string url . Url to use in the API calls
+    # @param string doc . File to use in the API calls
     # @param string model . Name of the model to use in the classification
     # @params array otherparams . Array where can be added other params to use in the API call
     # @params array extraheaders . Array where can be added other headers used in the request
 
-    def __init__(self, key, txt=None,url=None, doc=None, model='IPTC_es', otherparams=None, extraheaders=None):
+    def __init__(self, key, txt=None,url=None, doc=None, model='IPTC_en', otherparams=None, extraheaders=None):
         self._params = {}
         meaningcloud.Request.__init__(self, self.URL, key)
         self.otherarams = otherparams

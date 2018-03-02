@@ -1,6 +1,5 @@
 #! /usr/bin/env python
 
-
 # Always prefer setuptools over distutils
 from setuptools import setup, find_packages
 # To use a consistent encoding
@@ -14,7 +13,7 @@ setup(
     name='MeaningCloud-python',  
 
    
-    version='1.0.0',  
+    version='1.0.1',  
 
    
     description='Official Python SDK for MeaningCloud API', 
@@ -43,7 +42,7 @@ setup(
 
    
     install_requires=[
-	'requests'
+	'requests[security]'
 	
 	], 
 

@@ -98,6 +98,7 @@ class Request:
 
 
     def sendRequest(self, extraHeaders=""):
+        self.addParam('src','mc-python')
         params = urlencode(self._params)
         headers = {'content-type': 'application/x-www-form-urlencoded'}
         url = self._url

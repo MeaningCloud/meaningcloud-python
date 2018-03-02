@@ -2,7 +2,7 @@ import meaningcloud.Request
 
 
 class LanguageRequest(meaningcloud.Request):
-    URL = 'http://api.meaningcloud.com/lang-2.0'
+    URL = 'https://api.meaningcloud.com/lang-2.0'
     otherparams = None
     extraheaders = None
     type_ = ""
@@ -11,8 +11,8 @@ class LanguageRequest(meaningcloud.Request):
     # @param string url URL of the API against which the request will be made
     # @param string key license key
     # @param string txt . Text to use in the API calls
-    # @param string url . Text to use in the API calls
-    # @param string doc . Text to use in the API calls
+    # @param string url . Url to use in the API calls
+    # @param string doc . File to use in the API calls
     # @params array otherparams . Array where can be added other params to use in the API call
     # @params array extraheaders . Array where can be added other headers used in the request
 
