@@ -2,6 +2,7 @@
 # Date: 26/02/18
 
 import requests
+
 import sys
 if(sys.version_info.major < 3):
     from urllib import urlencode
@@ -17,6 +18,8 @@ class Request:
     _key = ""
     # @ var array
     _params = {}
+
+    _file = {}
 
     CONTENT_TYPE_TXT = 'txt'
     CONTENT_TYPE_URL = 'url'
@@ -60,7 +63,12 @@ class Request:
         if type_ in [self.CONTENT_TYPE_TXT, self.CONTENT_TYPE_URL,
                      self.CONTENT_TYPE_FILE]:
             if type_ == self.CONTENT_TYPE_FILE:
-                self.addParam('doc',open(value,'rb'))
+                self._file = {}
+                self._file = {'doc': open(value,'rb')}
+                #file = open(value,'rb')
+                #content = file.read().decode('utf-8')
+                #file.close()
+                #self.addParam('doc',value)
             else:
                 self.addParam(type_, value)
 
@@ -99,14 +107,26 @@ class Request:
 
     def sendRequest(self, extraHeaders=""):
         self.addParam('src','mc-python')
-        params = urlencode(self._params)
-        headers = {'content-type': 'application/x-www-form-urlencoded'}
-        url = self._url
-        if ((extraHeaders is not None) and(extraHeaders is dict)):
-            headers = headers.update(extraHeaders)
 
-        result = requests.request("POST", url=url, data=params, headers=headers)
-        return result
+        params = urlencode(self._params)
+
+        url = self._url
+
+        if ('doc' in self._file.keys()):
+            headers = {}
+
+            if ((extraHeaders is not None) and (extraHeaders is dict)):
+                headers = headers.update(extraHeaders)
+
+            result = requests.post(url=url, data=self._params, files=self._file, headers=headers)
+            return result
+        else:
+            headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+            if ((extraHeaders is not None) and (extraHeaders is dict)):
+                headers = headers.update(extraHeaders)
+            result = requests.request("POST", url=url, data=params, headers=headers)
+            return result
+        #return result
 
 
     # Getters and Setters
@@ -149,3 +169,6 @@ class Request:
 
     def setTimeout(self, timeout):
         self._timeout = timeout
+
+    def getFile(self):
+        return self._file

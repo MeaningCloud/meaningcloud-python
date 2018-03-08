@@ -36,11 +36,13 @@ class TopicsRequesTest(unittest.TestCase):
 
         file = self.RESOURCES_DIR+'file.txt'
         request5 = meaningcloud.TopicsRequest(self.KEY, doc=file, topicType="a" , extraheaders=extraHeaders, otherparams=otherparams)
-        self.assertIsNotNone('doc' in request5.getParams().keys(), True)
-        doc = request5.getParams()['doc'].readlines()
-        request5.getParams()['doc'].close()
+
+        self.assertIsNotNone('doc' in request5.getParams().keys(), False)
+        doc = request5._file['doc'].read().decode('utf-8')
+
+        request5._file['doc'].close()
         aux_doc = open(self.RESOURCES_DIR + 'file.txt', 'rb')
-        aux_conten = aux_doc.readlines()
+        aux_conten = aux_doc.read().decode('utf-8')
         aux_doc.close()
         self.assertEqual(aux_conten, doc)
 

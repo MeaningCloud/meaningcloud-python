@@ -66,13 +66,15 @@ class RequestTest(unittest.TestCase):
     def testSetContentFile(self):
         file = self.RESOURCES_DIR+'file.txt'
         self.request.setContentFile(file)
+        file = self.request.getFile()
         params = self.request.getParams()
-        self.assertTrue('doc' in params.keys())
-        self.assertIsNotNone(params['doc'].name)
-        doc = params['doc'].readlines()
-        params['doc'].close()
+        self.assertFalse('doc' in params.keys())
+        self.assertTrue('doc' in file.keys())
+        self.assertIsNotNone(file['doc'])
+        doc = file['doc'].read().decode('utf-8')
+        file['doc'].close()
         aux_doc = open(self.RESOURCES_DIR+'file.txt','rb')
-        aux_conten = aux_doc.readlines()
+        aux_conten = aux_doc.read().decode('utf-8')
         aux_doc.close()
         self.assertEqual(aux_conten,doc)
 
