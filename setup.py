@@ -13,13 +13,13 @@ setup(
     name='MeaningCloud-python',  
 
    
-    version='1.0.1',
+    version='1.0.2',
 
    
     description='Official Python SDK for MeaningCloud API', 
 
     
-    url='https://gitlab.com/meaningcloud/public/meaningcloud-python', 
+    url='https://github.com/MeaningCloud/meaningcloud-python', 
 
    
     author='MeaningCloud',  
@@ -32,9 +32,18 @@ setup(
     keywords='nlp, MeaningCloud, text analytics', 
 
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
+        'Intended Audience :: Developers',
+        'Intended Audience :: Information Technology',
+        'Intended Audience :: Science/Research',
+        'Topic :: Text Processing',
+        'Topic :: Text Processing :: General',
+        'Topic :: Text Processing :: Linguistic',
+        'Topic :: Scientific/Engineering',
+        'Topic :: Scientific/Engineering :: Artificial Intelligence',
+        'Topic :: Scientific/Engineering :: Information Analysis'
     ],
 
     
