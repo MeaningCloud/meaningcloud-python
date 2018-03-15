@@ -13,10 +13,10 @@ setup(
     name='MeaningCloud-python',  
 
    
-    version='1.0.2',
+    version='1.0.3',
 
    
-    description='Official Python SDK for MeaningCloud API', 
+    description='Official Python SDK for MeaningCloud API',
 
     
     url='https://github.com/MeaningCloud/meaningcloud-python', 
