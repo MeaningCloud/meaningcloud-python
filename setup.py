@@ -8,15 +8,20 @@ from os import path
 
 here = path.abspath(path.dirname(__file__))
 
+with open('README.rst') as readme_file:
+    readme = readme_file.read()
+
 setup(
     
     name='MeaningCloud-python',  
 
    
-    version='1.0.3',
+    version='1.0.4',
 
    
     description='Official Python SDK for MeaningCloud API',
+
+    long_description=readme,
 
     
     url='https://github.com/MeaningCloud/meaningcloud-python', 
