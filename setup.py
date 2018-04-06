@@ -12,29 +12,29 @@ with open('README.rst') as readme_file:
     readme = readme_file.read()
 
 setup(
-    
-    name='MeaningCloud-python',  
 
-   
-    version='1.0.4',
+    name='MeaningCloud-python',
 
-   
+
+    version='1.1.0',
+
+
     description='Official Python SDK for MeaningCloud API',
 
     long_description=readme,
 
-    
-    url='https://github.com/MeaningCloud/meaningcloud-python', 
 
-   
-    author='MeaningCloud',  
+    url='https://github.com/MeaningCloud/meaningcloud-python',
 
-    
+
+    author='MeaningCloud',
+
+
     author_email='support@meaningcloud.com',
 
 
-   
-    keywords='nlp, MeaningCloud, text analytics', 
+
+    keywords='nlp, MeaningCloud, text analytics',
 
     classifiers=[
         'Development Status :: 5 - Production/Stable',
@@ -51,16 +51,16 @@ setup(
         'Topic :: Scientific/Engineering :: Information Analysis'
     ],
 
-    
-    packages=find_packages(exclude=['contrib', 'docs', 'tests']),  
 
-   
+    packages=find_packages(exclude=['contrib', 'docs', 'tests']),
+
+
     install_requires=[
-	'requests[security]'
-	],
+        'requests[security]'
+    ],
 
-    
-    extras_require={  
+
+    extras_require={
         'dev': ['check-manifest'],
         'test': ['coverage'],
     },

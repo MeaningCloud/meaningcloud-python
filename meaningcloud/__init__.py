@@ -8,3 +8,5 @@ from meaningcloud.SentimentRequest import *
 from meaningcloud.SentimentResponse import *
 from meaningcloud.LanguageRequest import *
 from meaningcloud.LanguageResponse import *
+from meaningcloud.ParserRequest import *
+from meaningcloud.ParserResponse import *

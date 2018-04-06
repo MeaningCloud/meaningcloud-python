@@ -61,10 +61,6 @@ try:
     lang_response = meaningcloud.LanguageResponse(meaningcloud.LanguageRequest(license_key, txt=text).sendReq())
 
 
-
-    #We are going to make a request to the Language Identification API
-    lang_response = meaningcloud.LanguageResponse(meaningcloud.LanguageRequest(license_key, txt=text).sendReq())
-
     #If there are no errors in the request, we will use the language detected to make a request to Sentiment and Topics
     if(lang_response.isSuccessful()):
         print("\nThe request to 'Language Identification' finished successfully!\n")
@@ -74,6 +70,20 @@ try:
             language = results['language_list'][0]['language']
             print("\tLanguage detected: " + results['language_list'][0]['name'] + ' (' + language + ")\n")
 
+    # We are going to make a request to the Lemmatization, PoS and Parsing API
+    parser_response = meaningcloud.ParserResponse(
+        meaningcloud.ParserRequest(license_key, txt=text, lang='en').sendReq())
+
+    # If there are no errors in the request, print tokenization and lemmatization
+    if parser_response.isSuccessful():
+        print("\nThe request to 'Lemmatization, PoS and Parsing' finished successfully!\n")
+        lemmatization = parser_response.getLemmatization(True)
+        print("\tLemmatization and PoS Tagging:\n")
+        for token, analyses in lemmatization.items():
+            print("\t\tToken -->", token)
+            for analysis in analyses:
+                print("\t\t\tLemma -->", analysis['lemma'])
+                print("\t\t\tPoS Tag -->", analysis['pos'], "\n")
 
 
 

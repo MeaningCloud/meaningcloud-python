@@ -43,11 +43,13 @@ This SDK currently contains the following:
     - **TopicsRequest**: models a request to MeaningCloud TopicsExtraction API.
     - **ClassRequest**: models a request to MeaningCloud Text Classification API.
     - **SentimentRequest**: models a request to MeaningCloud Sentiment Analysis API.
+    - **ParserRequest**: models a request to Meaningcloud Lemmatization, PoS and Parsing API.
 - **Response**: models a generic response from the MeaningCloud API.
     - **TopicsResponse**: models a response from the Topic Extraction API, providing auxiliary functions to work with the response, extracting the different types of topics and some of the most used fields in them.
     - **ClassResponse**: models a response from the Text Classification API, providing auxiliary functions to work with the response and extract the different fields in each category.
     - **SentimentResponse**: models a response from the Sentiment Analysis API, providing auxiliary functions to work with the response and extract the sentiment detected at different levels and for different elements.
     - **LanguageResponse**: models a response from the Language Identification API, providing auxiliary functions to work with the response and extract the sentiment detected at different levels and for different elements.
+    - **ParserResponse**: models a response from the Lemmatization, PoS and Parsing API, providing auxiliary functions to work with the response and extract the lemmatization and PoS tagging of the text provided.
    
 ### Usage
 
@@ -66,7 +68,7 @@ import meaningcloud
 model = 'IAB_en'
 
 # @param license_key - Your license key (found in the subscription section in https://www.meaningcloud.com/developer/)
-license_key = '<your_license_key'
+license_key = '<your_license_key>'
 
 # @param text - Text to use for different API calls
 text = 'London is a very nice city but I also love Madrid.'
@@ -84,7 +86,7 @@ try:
 
         entities =  topics_response.getEntities()
         if (entities):
-            print("\tEntities detected ("+str(len(entities))+"):\n")
+            print("\tEntities detected (" + str(len(entities)) + "):\n")
             for entity in entities:
                 print("\t\t" + topics_response.getTopicForm(entity) + ' --> ' + topics_response.getTypeLastNode(topics_response.getOntoType(entity)) + "\n")
 
@@ -97,7 +99,8 @@ try:
             print("\nOh no! There was the following error: " + topics_response.getStatusMsg() + "\n")
 
 
-    #CLASS API CALL
+
+    #CLASS API CALL	
     #class_response = meaningcloud.ClassResponse(meaningcloud.ClassRequest(license_key, txt=text, model=model).sendReq())
 
 
@@ -110,11 +113,11 @@ try:
     #generic.addParam('parameter','value')
     #generic_result = generic.sendRequest()
     #generic_response = meaningcloud.Response(generic_result)
-	
 
 
     #We are going to make a request to the Language Identification API
     lang_response = meaningcloud.LanguageResponse(meaningcloud.LanguageRequest(license_key, txt=text).sendReq())
+
 
     #If there are no errors in the request, we will use the language detected to make a request to Sentiment and Topics
     if(lang_response.isSuccessful()):
@@ -123,13 +126,26 @@ try:
         results = lang_response.getResults()
         if('language_list' in results.keys() and results['language_list']):
             language = results['language_list'][0]['language']
-            print("\tLanguage detected: " + results['language_list'][0]['name'] + ' ('+language+")\n")
+            print("\tLanguage detected: " + results['language_list'][0]['name'] + ' (' + language + ")\n")
 
+    # We are going to make a request to the Lemmatization, PoS and Parsing API
+    parser_response = meaningcloud.ParserResponse(
+        meaningcloud.ParserRequest(license_key, txt=text, lang='en').sendReq())
+
+    # If there are no errors in the request, print tokenization and lemmatization
+    if parser_response.isSuccessful():
+        print("\nThe request to 'Lemmatization, PoS and Parsing' finished successfully!\n")
+        lemmatization = parser_response.getLemmatization(True)
+        print("\tLemmatization and PoS Tagging:\n")
+        for token, analyses in lemmatization.items():
+            print("\t\tToken -->", token)
+            for analysis in analyses:
+                print("\t\t\tLemma -->", analysis['lemma'])
+                print("\t\t\tPoS Tag -->", analysis['pos'], "\n")
 
 
 
 except ValueError:
     e = sys.exc_info()[0]
     print("\nException: " + str(e))
-
 ```
