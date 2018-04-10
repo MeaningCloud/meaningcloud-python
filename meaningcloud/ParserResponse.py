@@ -1,14 +1,16 @@
-# TODO https://www.python.org/dev/peps/pep-0257/
-
 import meaningcloud.Response
 
 
 class ParserResponse(meaningcloud.Response):
 
-    # ParserResponse constructor
-    # @param string response string returned by the request
-    # @throws \Exception  if the parameters passed are incorrect
     def __init__(self, response):
+        """
+        ParserResponse constructor
+
+        :param response:
+            String returned by the request
+        """
+
         if not response:
             raise Exception("The request sent did not return a response")
 
@@ -18,6 +20,15 @@ class ParserResponse(meaningcloud.Response):
     # @param boolean fullPOSTag set to true to obtain the complete PoS tag
     # @return array of tokens from the syntactic tree with their lemmas and PoS
     def getLemmatization(self, fullPOSTag=False):
+        """
+        This function obtains the lemmas and PoS for the text sent
+
+        :param fullPOSTag:
+            Set to true to obtain the complete PoS tag
+        :return:
+            Dictionary of tokens from the syntactic tree with their lemmas and PoS
+        """
+
         leaves = self._getTreeLeaves()
         lemmas = {}
         for leaf in leaves:

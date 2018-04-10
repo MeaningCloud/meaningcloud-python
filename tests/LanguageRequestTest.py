@@ -1,6 +1,7 @@
 import unittest
 import meaningcloud
 
+
 class LanguageRequestTest(unittest.TestCase):
     URL = 'https://api.meaningcloud.com/lang-2.0'
     KEY = 'MY_KEY'
@@ -21,11 +22,12 @@ class LanguageRequestTest(unittest.TestCase):
         self.assertEqual(self.TIMEOUT_DEFAULT, request.getTimeout())
 
         extraHeaders = ["Accept: application/json"]
-        request2 = meaningcloud.LanguageRequest(self.KEY,txt=self.text, extraheaders=extraHeaders)
+        request2 = meaningcloud.LanguageRequest(self.KEY, txt=self.text, extraheaders=extraHeaders)
         self.assertIsNotNone(request2.sendReq())
 
         otherparams = {'key2': 'my_key2'}
-        request3 = meaningcloud.LanguageRequest(self.KEY, txt=self.text, extraheaders=extraHeaders, otherparams=otherparams)
+        request3 = meaningcloud.LanguageRequest(self.KEY, txt=self.text, extraheaders=extraHeaders,
+                                                otherparams=otherparams)
         self.assertIsNotNone('key2' in request3.getParams().keys(), True)
         self.assertEqual(request3.getParams()['key2'], 'my_key2')
 
@@ -36,7 +38,7 @@ class LanguageRequestTest(unittest.TestCase):
 
         file = self.RESOURCES_DIR + 'file.txt'
         request5 = meaningcloud.LanguageRequest(self.KEY, doc=file, extraheaders=extraHeaders,
-                                             otherparams=otherparams)
+                                                otherparams=otherparams)
 
         self.assertIsNotNone('doc' in request5.getParams().keys(), False)
         doc = request5._file['doc'].read().decode('utf-8')

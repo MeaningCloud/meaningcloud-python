@@ -1,6 +1,7 @@
 import unittest
 import meaningcloud
 
+
 class ParserRequestTest(unittest.TestCase):
 
     URL = 'https://api.meaningcloud.com/parser-2.0'
@@ -24,18 +25,21 @@ class ParserRequestTest(unittest.TestCase):
         request2 = meaningcloud.TopicsRequest(self.KEY, txt=self.text, lang="en", extraheaders=extraHeaders)
         self.assertIsNotNone(request2.sendReq())
 
-        otherparams = {'key2':'my_key2'}
-        request3 = meaningcloud.TopicsRequest(self.KEY, txt=self.text, lang="en", extraheaders=extraHeaders,otherparams=otherparams)
+        otherparams = {'key2': 'my_key2'}
+        request3 = meaningcloud.TopicsRequest(self.KEY, txt=self.text, lang="en", extraheaders=extraHeaders,
+                                              otherparams=otherparams)
         self.assertIsNotNone('key2' in request3.getParams().keys(), True)
         self.assertEqual(request3.getParams()['key2'],'my_key2')
 
         url = 'https://en.wikipedia.org/wiki/Star_Trek'
-        request4 = meaningcloud.TopicsRequest(self.KEY, url=url, lang="en", extraheaders=extraHeaders,otherparams=otherparams)
+        request4 = meaningcloud.TopicsRequest(self.KEY, url=url, lang="en", extraheaders=extraHeaders,
+                                              otherparams=otherparams)
         self.assertIsNotNone('url' in request4.getParams().keys(), True)
         self.assertEqual(request4.getParams()['url'], url)
 
         file = self.RESOURCES_DIR+'file.txt'
-        request5 = meaningcloud.TopicsRequest(self.KEY, doc=file, lang="en" , extraheaders=extraHeaders, otherparams=otherparams)
+        request5 = meaningcloud.TopicsRequest(self.KEY, doc=file, lang="en", extraheaders=extraHeaders,
+                                              otherparams=otherparams)
 
         self.assertIsNotNone('doc' in request5.getParams().keys(), False)
         doc = request5._file['doc'].read().decode('utf-8')
@@ -46,13 +50,13 @@ class ParserRequestTest(unittest.TestCase):
         aux_doc.close()
         self.assertEqual(aux_conten, doc)
 
-
         return request
 
     def testSendReq(self):
         request = self.request
         requestRq = request.sendReq()
         self.assertIsNotNone(requestRq)
+
 
 if __name__ == '__main__':
     unittest.main()

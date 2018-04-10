@@ -1,173 +1,208 @@
-# Created by MeaningCloud Support Team
-# Date: 26/02/18
-
 import meaningcloud.Response
+
 
 class TopicsResponse(meaningcloud.Response):
 
-    #TopicsResponse constructor
-    #@param string response string returned by the request
-    #@throws \Exception  if the parameters passed are incorrect
-
     def __init__(self, response):
+        """
+        TopicsResponse constructor
+
+        :param response:
+            String returned by the request
+        """
+
         if not response:
             raise Exception("The request sent did not return a response")
 
         meaningcloud.Response.__init__(self, response)
 
-
     # Getters for the different types of topics returned
 
-    #@return array with the entities detected
-
     def getEntities(self):
+        """
+        Obtains the entities detected in the text
+
+        :return:
+            Entities
+        """
+
         return (self._response['entity_list']
-                if(('entity_list' in self._response.keys()) and  (self._response['entity_list'] is not None))
+                if(('entity_list' in self._response.keys()) and (self._response['entity_list'] is not None))
                 else {})
 
-
-
-    #@return array with the concepts detected
-
     def getConcepts(self):
+        """
+        Obtains the concepts detected in the text
+
+        :return:
+            Concepts
+        """
+
         return (self._response['concept_list']
                 if (('concept_list' in self._response.keys()) and (self._response['concept_list'] is not None))
                 else {})
 
-
-
-    #@return array with the time expressions detected
-
     def getTimeExpressions(self):
+        """
+        Obtains the time expressions detected in the text
+
+        :return:
+            Time expressions
+        """
+
         return (self._response['time_expression_list']
-                if (('time_expression_list' in self._response.keys()) and (self._response['time_expression_list'] is not None))
-                else {})
-
-
-
-    #@return array with the money expressions detected
+                if (('time_expression_list' in self._response.keys()) and
+                    (self._response['time_expression_list'] is not None)) else {})
 
     def getMoneyExpressions(self):
+        """
+        Obtains the money expressions detected in the text
+
+        :return:
+            Money expressions
+        """
+
         return (self._response['money_expression_list']
-                if (('money_expression_list' in self._response.keys()) and (self._response['money_expression_list'] is not None))
-                else {})
-
-
-
-    #@return array with the other expressions detected
+                if (('money_expression_list' in self._response.keys()) and
+                    (self._response['money_expression_list'] is not None)) else {})
 
     def getQuantityExpressions(self):
+        """
+        Obtains the quantity expressions detected in the text
+
+        :return:
+            Quantity expressions
+        """
+
         return (self._response['quantity_expression_list']
-                if (('quantity_expression_list' in self._response.keys()) and (self._response['quantity_expression_list'] is not None))
-                else {})
-
-
-
-    #@return array with the other expressions detected
+                if (('quantity_expression_list' in self._response.keys()) and
+                    (self._response['quantity_expression_list'] is not None)) else {})
 
     def getOtherExpressions(self):
+        """
+        Obtains other expressions detected in the text
+
+        :return:
+            Other expressions
+        """
+
         return (self._response['other_expression_list']
-                if (('other_expression_list' in self._response.keys()) and (self._response['other_expression_list'] is not None))
-                else {})
-
-
-
-    #@return array with the quotations detected
+                if (('other_expression_list' in self._response.keys()) and
+                    (self._response['other_expression_list'] is not None)) else {})
 
     def getQuotations(self):
+        """
+        Obtains quotations detected in the text
+
+        :return:
+            Quotations
+        """
+
         return (self._response['quotation_list']
                 if (('quotation_list' in self._response.keys()) and (self._response['quotation_list'] is not None))
                 else {})
 
-
-
-
-    #@return array with the relations detected
-
     def getRelations(self):
+        """
+        Obtains relations detected in the text
+
+        :return:
+            Relations
+        """
+
         return (self._response['relation_list']
                 if (('relation_list' in self._response.keys()) and (self._response['relation_list'] is not None))
                 else {})
 
-
-
-    #Generic auxiliary functions
-
-
-    # @param array topic
-    # @return string
+    # Generic auxiliary functions
 
     def getTopicForm(self, topic):
+        """
+        Obtains the form of a topic
+
+        :param topic:
+            Topic to obtain the form from
+        :return:
+            Topic form
+        """
+
         return (topic['form']
                 if (('form' in topic.keys()) and (topic['form'] is not None))
                 else "")
 
-
-
-    # @param array topic
-    # @return string
-
     def getTopicRelevance(self, topic):
+        """
+        Obtains the relevance of a topic
+
+        :param topic:
+            Topic to obtain the relevance from
+        :return:
+            Topic relevance
+        """
+
         return (topic['relevance']
                 if (('relevance' in topic.keys()) and (topic['relevance'] is not None))
                 else "")
 
-
-
-
-    #Obtains the ontology type of a topic (if it applies)
-    # @param array topic
-    # @returns string
-
-
     def getOntoType(self, topic):
+        """
+        Obtains the ontology type of a topic (if it applies)
+
+        :param topic:
+            Topic to obtain the ontology type from
+        :return:
+            Topic ontology type
+        """
+
         return (topic['sementity']['type']
-                if (('sementity' in topic.keys()) and ('type' in topic['sementity'].keys()) and (topic['sementity']['type'] is not None))
-                else "")
-
-
-
-
-
-    # Obtain the last node or leaf of the type specified
-    # @param string $type type we want to analyze (sementity, semtheme)
-    # @return string
+                if (('sementity' in topic.keys()) and ('type' in topic['sementity'].keys()) and
+                    (topic['sementity']['type'] is not None)) else "")
 
     def getTypeLastNode(self, type_):
+        """
+        Obtains the last node or leaf of the type specified
+
+        :param type_:
+            Type we want to analize (sementity, semtheme)
+        :return:
+            Last node of the type
+        """
+
         lastNode = ""
-        if ((type_) and (type(type_) is not list) and (type(type_) is not dict)):
+        if type_ and (type(type_) is not list) and (type(type_) is not dict):
             aType = type_.split('>')
             lastNode = aType[len(aType) - 1]
         return lastNode
 
-
-
-
-
-    # Gets the number of appearances of a topic
-    # @param array $topic
-    # @return int number of appearances
-
-
     def getNumberOfAppearances(self, topic):
+        """
+        Gets the number of appearances of a topic
+
+        :param topic:
+            Topic to analyze
+        :return:
+            Number of appearances
+        """
+
         if topic is not None:
             if('variant_list' in topic.keys()) and (topic['variant_list'] is not None):
                 return len(topic['variant_list'])
             else:
-                return 1;
+                return 1
         else:
             return 0
 
-
-
-
-
-    # Checks the field "dictionary" to check if a entity/concept comes from a user dictionary
-    # @param $topic
-    # @return bool true if the field dictionary is in the topic
-
     def isUserDefined(self, topic):
-        if (('dictionary' in topic.keys()) and (topic['dictionary'])):
+        """
+        Checks the field 'dictionary' to check if an entity/concept comes from a user dictionary
+
+        :param topic:
+            Topic to analyze
+        :return:
+            Boolean indicating if the topic comes from a user dictionary
+        """
+
+        if ('dictionary' in topic.keys()) and (topic['dictionary']):
             return True
         else:
             return False

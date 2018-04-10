@@ -1,6 +1,7 @@
 import unittest
 import meaningcloud
 
+
 class ClassRequestTest(unittest.TestCase):
     URL = 'https://api.meaningcloud.com/class-1.1'
     KEY = 'MY_KEY'
@@ -9,7 +10,6 @@ class ClassRequestTest(unittest.TestCase):
     text = 'London is big'
     model = 'IAB_en'
     request = meaningcloud.ClassRequest(KEY, txt=text, model=model)
-
 
     def testConstruct(self):
         request = self.request
@@ -25,30 +25,31 @@ class ClassRequestTest(unittest.TestCase):
         request2 = meaningcloud.ClassRequest(self.KEY, txt=self.text, model=self.model, extraheaders=extraHeaders)
         self.assertIsNotNone(request2.sendReq())
 
-        otherparams = {'key2':'my_key2'}
-        request3 = meaningcloud.ClassRequest(self.KEY, txt=self.text, model=self.model, extraheaders=extraHeaders,otherparams=otherparams)
+        otherparams = {'key2': 'my_key2'}
+        request3 = meaningcloud.ClassRequest(self.KEY, txt=self.text, model=self.model, extraheaders=extraHeaders,
+                                             otherparams=otherparams)
         self.assertIsNotNone('key2' in request3.getParams().keys(), True)
-        self.assertEqual(request3.getParams()['key2'],'my_key2')
+        self.assertEqual(request3.getParams()['key2'], 'my_key2')
 
         url = 'https://en.wikipedia.org/wiki/Star_Trek'
-        request4 = meaningcloud.ClassRequest(self.KEY, url=url, model=self.model, extraheaders=extraHeaders,otherparams=otherparams)
+        request4 = meaningcloud.ClassRequest(self.KEY, url=url, model=self.model, extraheaders=extraHeaders,
+                                             otherparams=otherparams)
 
         self.assertIsNotNone('url' in request4.getParams().keys(), True)
         self.assertEqual(request4.getParams()['url'], url)
 
         file = self.RESOURCES_DIR + 'file.txt'
         request5 = meaningcloud.ClassRequest(self.KEY, doc=file, model=self.model, extraheaders=extraHeaders,
-                                              otherparams=otherparams)
-        #result = request5.sendReq()
+                                             otherparams=otherparams)
 
         self.assertIsNotNone('doc' in request5.getParams().keys(), False)
         doc = request5._file['doc'].read().decode('utf-8')
 
         request5._file['doc'].close()
         aux_doc = open(self.RESOURCES_DIR + 'file.txt', 'rb')
-        aux_conten = aux_doc.read().decode('utf-8')
+        aux_content = aux_doc.read().decode('utf-8')
         aux_doc.close()
-        self.assertEqual(aux_conten, doc)
+        self.assertEqual(aux_content, doc)
 
         return request
 
@@ -56,7 +57,6 @@ class ClassRequestTest(unittest.TestCase):
         request = self.request
         requestRq = request.sendReq()
         self.assertIsNotNone(requestRq)
-
 
 
 if __name__ == '__main__':

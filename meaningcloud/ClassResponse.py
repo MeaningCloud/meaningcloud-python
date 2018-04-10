@@ -1,60 +1,87 @@
-# Created by MeaningCloud Support Team
-# Date: 26/02/18
-
-
 import meaningcloud.Response
-
 
 
 class ClassResponse(meaningcloud.Response):
 
-    # ClassResponse constructor
-    # @param string response string returned by the request
-    # @throws \Exception  if the parameters passed are incorrect
+    def __init__(self, response):
+        """
+        ClassResponse constructor
 
-    def __init__(self,response):
+        :param response:
+            String returned by the request
+        """
+
         if not response:
             raise Exception("The request sent did not return a response")
         meaningcloud.Response.__init__(self, response)
 
-
-    # @return array with the categories detected
-
     def getCategories(self):
+        """
+        Get categories from the analyzed text
+
+        :return:
+            Array with the categories detected
+        """
+
         return (self._response['category_list']
                 if (('category_list' in self._response.keys()) and (self._response['category_list'] is not None))
                 else {})
 
     # Generic auxiliary functions
 
-    # @param array category
-    # @return string
-
     def getCategoryCode(self, category):
-        return (category['code']
-                if ((len(category)>0) and ('code' in category.keys()) and (category['code'] is not None))
-                else "")
+        """
+        Get the code of a category
 
-    # @param array category
-    # @return string
+        :param category:
+            Category you want the code from
+        :return:
+            Category code
+        """
+
+        return (category['code']
+                if ((len(category) > 0) and ('code' in category.keys()) and (category['code'] is not None))
+                else "")
 
     def getCategoryLabel(self, category):
-        return (category['label']
-                if ((len(category)>0) and ('label' in category.keys()) and (category['label'] is not None))
-                else "")
+        """
+        Get the label of a category
 
-    # @param array category
-    # @return string
+        :param category:
+            Category you want the label from
+        :return:
+            Category label
+        """
+
+        return (category['label']
+                if ((len(category) > 0) and ('label' in category.keys()) and (category['label'] is not None))
+                else "")
 
     def getCategoryAbsRelevance(self, category):
+        """
+        Get the absolute relevance of a category
+
+        :param category:
+            Category you want the abs_relevance from
+        :return:
+            Category abs_relevance
+        """
+
         return (category['abs_relevance']
-                if ((len(category)>0) and ('abs_relevance' in category.keys()) and (category['abs_relevance'] is not None))
+                if ((len(category) > 0) and ('abs_relevance' in category.keys()) and
+                    (category['abs_relevance'] is not None))
                 else "")
 
-    # @param array category
-    # @return string
-
     def getCategoryRelevance(self, category):
+        """
+        Get the relevance of a category
+
+        :param category:
+            Category you want the relevance from
+        :return:
+            Category relevance
+        """
+
         return (category['relevance']
-                if ((len(category)>0) and ('relevance' in category.keys()) and (category['relevance'] is not None))
+                if ((len(category) > 0) and ('relevance' in category.keys()) and (category['relevance'] is not None))
                 else "")

@@ -8,23 +8,31 @@ class ClassRequest(meaningcloud.Request):
     extraheaders = None
     type_ = ""
 
-    # ClassRequest constructor
-    # @param string url URL of the API against which the request will be made
-    # @param string key license key
-    # @param string txt . Text to use in the API calls
-    # @param string url . Url to use in the API calls
-    # @param string doc . File to use in the API calls
-    # @param string model . Name of the model to use in the classification
-    # @params array otherparams . Array where can be added other params to use in the API call
-    # @params array extraheaders . Array where can be added other headers used in the request
+    def __init__(self, key, txt=None, url=None, doc=None, model='IPTC_en', otherparams=None, extraheaders=None):
+        """
+        ClassRequest constructor
 
-    def __init__(self, key, txt=None,url=None, doc=None, model='IPTC_en', otherparams=None, extraheaders=None):
+        :param key:
+            license key
+        :param txt:
+            Text to use in the API calls
+        :param url:
+            Url to use in the API calls
+        :param doc:
+            File to use in the API calls
+        :param model:
+            Name of the model to use in the classification
+        :param otherparams:
+            Array where other params can be added to be used in the API call
+        :param extraheaders:
+            Array where other headers can be added to be used in the request
+        """
+
         self._params = {}
         meaningcloud.Request.__init__(self, self.URL, key)
         self.otherarams = otherparams
         self.extraheaders = extraheaders
         self._url = self.URL
-
 
         self.addParam('key', key)
         self.addParam('model', model)
@@ -49,5 +57,4 @@ class ClassRequest(meaningcloud.Request):
                 self.addParam(key, otherparams[key])
 
     def sendReq(self):
-
         return self.sendRequest(self.extraheaders)

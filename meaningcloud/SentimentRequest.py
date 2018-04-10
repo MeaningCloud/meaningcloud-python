@@ -7,26 +7,34 @@ class SentimentRequest(meaningcloud.Request):
     extraheaders = None
     type_ = ""
 
-    # SentimentRequest constructor
-    # @param string url URL of the API against which the request will be made
-    # @param string key license key
-    # @param string lang . Language used in the request
-    # @param string txt . Text to use in the API calls
-    # @param string url . Url to use in the API calls
-    # @param string doc . File to use in the API calls
-    # @param string txtf . Format of the text
-    # @params array otherparams . Array where can be added other params to use in the API call
-    # @params array extraheaders . Array where can be added other headers used in the request
-
-
     def __init__(self, key, lang=None, txt=None, txtf='plain', url=None, doc=None, otherparams=None, extraheaders=None):
+        """
+        SentimentRequest constructor
+
+        :param key:
+            License key
+        :param lang:
+            Language used in the request
+        :param txt:
+            Text to use in the API calls
+        :param txtf:
+            Format of the text
+        :param url:
+            Url to use in the API calls
+        :param doc:
+            File to use in the API calls
+        :param otherparams:
+            Array where other params can be added to be used in the API call
+        :param extraheaders:
+            Array where other headers can be added to be used in the request
+        """
+
         self._params = {}
         meaningcloud.Request.__init__(self, self.URL, key)
 
         self.otherarams = otherparams
         self.extraheaders = extraheaders
         self._url = self.URL
-
 
         self.addParam('key', key)
         self.addParam('lang', lang)
@@ -48,11 +56,9 @@ class SentimentRequest(meaningcloud.Request):
                    }
         options[type_]()
 
-        if (otherparams):
+        if otherparams:
             for key in otherparams:
                 self.addParam(key, otherparams[key])
 
-
     def sendReq(self):
-
         return self.sendRequest(self.extraheaders)
