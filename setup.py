@@ -16,7 +16,7 @@ setup(
     name='MeaningCloud-python',
 
 
-    version='1.1.0',
+    version='1.1.1',
 
 
     description='Official Python SDK for MeaningCloud API',

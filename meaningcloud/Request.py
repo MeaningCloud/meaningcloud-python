@@ -119,12 +119,14 @@ class Request:
                 headers = headers.update(extraHeaders)
 
             result = requests.post(url=url, data=self._params, files=self._file, headers=headers)
+            result.encoding = 'utf-8'
             return result
         else:
             headers = {'Content-Type': 'application/x-www-form-urlencoded'}
             if (extraHeaders is not None) and (extraHeaders is dict):
                 headers = headers.update(extraHeaders)
             result = requests.request("POST", url=url, data=params, headers=headers)
+            result.encoding = 'utf-8'
             return result
 
     # Getters and Setters
