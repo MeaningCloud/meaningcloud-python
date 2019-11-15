@@ -53,7 +53,20 @@ This SDK currently contains the following:
    
 ### Usage
 
-This is an example on how to use this client (also included in the _example_ folder):
+In the _example_ folder, there are two examples:
+- **Client.py**, which contains a simple example on how to use the SDK
+- **mc_showcase**, which implements a pipeline where plain text files are read from a folder, and two CSV files result as output: one with several types of analyses done over each text, and the results from running Text Clustering over the complete collection.
+    The analyses done are:
+
+  * [Language Identification](https://www.meaningcloud.com/developer/language-identification): detects the language and returns code or name
+  * [Sentiment Analysis](https://www.meaningcloud.com/developer/sentiment-analysis): detects the global polarity detected in the text
+  * [Topics Extraction](https://www.meaningcloud.com/developer/topics-extraction): detects the most relevant entities and concepts in the text. If the _get_fibo_ variable is enabled, FIBO concepts will be output (requires access to the [Financial Industry pack](https://www.meaningcloud.com/developer/documentation/vertical-packs#financial_industry))
+  * [Deep Categorization](https://www.meaningcloud.com/developer/deep-categorization): categorizes the text according to the *IAB 2.0* taxonomy
+  * [Text Classification](https://www.meaningcloud.com/developer/text-classification): classifies the text according the *IPTC* taxonomy
+  * [Summarization](https://www.meaningcloud.com/developer/summarization): extracts a summary from the text
+
+
+This is what **Client.py** looks like:
 
 ```python
 #! /usr/bin/env python
@@ -72,8 +85,6 @@ license_key = '<your_license_key>'
 
 # @param text - Text to use for different API calls
 text = 'London is a very nice city but I also love Madrid.'
-
-
 
 
 try:
@@ -99,7 +110,6 @@ try:
             print("\nOh no! There was the following error: " + topics_response.getStatusMsg() + "\n")
 
 
-
     #CLASS API CALL	
     #class_response = meaningcloud.ClassResponse(meaningcloud.ClassRequest(license_key, txt=text, model=model).sendReq())
 
@@ -117,7 +127,6 @@ try:
 
     #We are going to make a request to the Language Identification API
     lang_response = meaningcloud.LanguageResponse(meaningcloud.LanguageRequest(license_key, txt=text).sendReq())
-
 
     #If there are no errors in the request, we will use the language detected to make a request to Sentiment and Topics
     if(lang_response.isSuccessful()):
@@ -142,7 +151,6 @@ try:
             for analysis in analyses:
                 print("\t\t\tLemma -->", analysis['lemma'])
                 print("\t\t\tPoS Tag -->", analysis['pos'], "\n")
-
 
 
 except ValueError:
