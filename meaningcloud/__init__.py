@@ -10,3 +10,9 @@ from meaningcloud.LanguageRequest import *
 from meaningcloud.LanguageResponse import *
 from meaningcloud.ParserRequest import *
 from meaningcloud.ParserResponse import *
+from meaningcloud.SummarizationRequest import *
+from meaningcloud.SummarizationResponse import *
+from meaningcloud.DeepCategorizationRequest import *
+from meaningcloud.DeepCategorizationResponse import *
+from meaningcloud.ClusteringRequest import *
+from meaningcloud.ClusteringResponse import *

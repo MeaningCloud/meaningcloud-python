@@ -47,13 +47,13 @@ def getSentimentAnalysis(text):
 # Calls Language Detection and returns the code or name for the text
 def detectLanguage(text, get_name=False):
     language = ''
-    # We are going to make a request to the Sentiment Analysis API
+    # We are going to make a request to the Language Identification API
     print("\tDetecting language...")
     lang_response = meaningcloud.LanguageResponse(meaningcloud.LanguageRequest(license_key, txt=text).sendReq())
     if lang_response.isSuccessful():
-        langs = lang_response.getResults()['language_list']
+        langs = lang_response.getLanguages()
         if langs:
-            language = langs[0]['language'] if not get_name else langs[0]['name']
+            language = lang_response.getLanguageCode(langs[0]) if not get_name else lang_response.getLanguageName(langs[0])
     else:
         print("\tOops! Request to detect language was not succesful: (" + lang_response.getStatusCode() + ') ' + lang_response.getStatusMsg())
     return language
@@ -114,14 +114,10 @@ def getDeepCategorization(text, model, num_cats):
     # We are going to make a request to the Deep Categorization API
     formatted_categories = ''
     print("\tGetting " + model[0:len(model) - 3].replace('_', ' ') + " analysis...")
-    deepcat = meaningcloud.Request(url="https://api.meaningcloud.com/deepcategorization-1.0", key=license_key)
-    deepcat.addParam('model', model)
-    deepcat.setContentTxt(text)
-    deepcat_response = meaningcloud.Response(deepcat.sendRequest())
+    deepcat_response = meaningcloud.DeepCategorizationResponse(meaningcloud.DeepCategorizationRequest(license_key, model=model, txt=text).sendReq())
     if deepcat_response.isSuccessful():
-        cat_results = deepcat_response.getResults()
-        categories = cat_results['category_list'] if (('category_list' in cat_results.keys()) and (cat_results['category_list'] is not None)) else {}
-        formatted_categories = (', '.join(cat['label'] + ' (' + cat['relevance'] +')' for cat in categories[:num_cats])) if categories else '(none)'
+        categories = deepcat_response.getCategories()
+        formatted_categories = (', '.join(deepcat_response.getCategoryLabel(cat) + ' (' + deepcat_response.getCategoryRelevance(cat) +')' for cat in categories[:num_cats])) if categories else '(none)'
     else:
         print("\tOops! Request to Deep Categorization was not succesful: (" + deepcat_response.getStatusCode() + ') ' + deepcat_response.getStatusMsg())
 
@@ -135,7 +131,7 @@ def getTextClassification(text, model, num_cats):
     class_response = meaningcloud.ClassResponse(meaningcloud.ClassRequest(license_key, txt=text, model=model, otherparams={'txtf': 'markup'}).sendReq())
     if class_response.isSuccessful():
         categories = class_response.getCategories()
-        formatted_categories = (', '.join(class_response.getCategoryLabel(cat) + ' (' + class_response.getCategoryRelevance(cat) +')' for cat in categories[:num_cats])) if categories else '(none)'        
+        formatted_categories = (', '.join(class_response.getCategoryLabel(cat) + ' (' + class_response.getCategoryRelevance(cat) +')' for cat in categories[:num_cats])) if categories else '(none)'
     else:
         print("\tOops! The request to Text Classification was not succesful: (" + class_response.getStatusCode() + ') ' + class_response.getStatusMsg())
 
@@ -144,15 +140,12 @@ def getTextClassification(text, model, num_cats):
 
 # Calls Summarization and obtains an extractive summary with the number of sentences especified
 def getSummarization(text, sentences):
-    # We are going to make a request to the Deep Categorization API
+    # We are going to make a request to the Summarization API
     summary = ''
     print("\tGetting automatic summarization...")
-    summarization = meaningcloud.Request(url="https://api.meaningcloud.com/summarization-1.0", key=license_key)
-    summarization.addParam('sentences', sentences)
-    summarization.setContentTxt(text)
-    summarization_response = meaningcloud.Response(summarization.sendRequest())
+    summarization_response = meaningcloud.SummarizationResponse(meaningcloud.SummarizationRequest(license_key, sentences=sentences, txt=text).sendReq())
     if summarization_response.isSuccessful():
-        summary = summarization_response.getResults()['summary']
+        summary = summarization_response.getSummary()
     else:
         print("\tOops! Request to Summarization was not succesful: (" + summarization_response.getStatusCode() + ') ' + summarization_response.getStatusMsg())
 
@@ -164,22 +157,12 @@ def getClustering(text_collection):
 
     # We are going to make a request to the Clustering API
     print("Getting clustering analysis...")
-    clustering = meaningcloud.Request(url="https://api.meaningcloud.com/clustering-1.1", key=license_key)
-    clustering.addParam('lang','en')
-    clustering.addParam('mode','tm')
-    texts = "\r\n".join(val.replace("\r", ' ').replace("\n", " ").replace("\f", " ") for val in text_collection.values())
-    ids = "\r\n".join(text_collection.keys())
-    clustering.setContentTxt(texts)
-    clustering.addParam('id', ids)
-
-    clustering_response = meaningcloud.Response(clustering.sendRequest())
-
+    clustering_response = meaningcloud.ClusteringResponse(meaningcloud.ClusteringRequest(license_key, lang='en', texts=text_collection).sendReq())
     if clustering_response.isSuccessful():
-        results = clustering_response.getResults()
-        clusters = results['cluster_list'] if (('cluster_list' in results.keys()) and (results['cluster_list'] is not None)) else {}
-        titles = [cl['title'] for cl in clusters]
-        sizes = [cl['size'] for cl in clusters]
-        scores = [float(cl['score']) for cl in clusters]
+        clusters = clustering_response.getClusters()
+        titles = [clustering_response.getClusterTitle(cl) for cl in clusters]
+        sizes = [clustering_response.getClusterSize(cl) for cl in clusters]
+        scores = [clustering_response.getClusterScore(cl) for cl in clusters]
         docs = [', '.join(cl['document_list'].keys()) for cl in clusters]
         return titles, sizes, scores, docs
     else:
@@ -244,7 +227,7 @@ if __name__ == "__main__":
     # read files
     input_files = {}
     for file_name in os.listdir('./' + input_folder):
-        f = open(input_folder + '/' + file_name)
+        f = open(input_folder + '/' + file_name, 'r', encoding='utf-8', errors='ignore')
         if f.mode == 'r':
             input_files[file_name] = f.read()
     
@@ -259,7 +242,7 @@ if __name__ == "__main__":
     df[label_list] = df['Text'].apply(analyzeText, fibo=get_fibo)
     df.to_csv('./' + output_file + '.csv', index_label='File_name')
     print("Results printed to '"+ output_file + ".csv'!")
-    #print(df)
+    # print(df)
 
 
     # Cluster all files
@@ -267,4 +250,4 @@ if __name__ == "__main__":
     df_clusters = pd.DataFrame( {'Cluster_Name': resulting_clusters[0], 'Size': resulting_clusters[1], 'Score': resulting_clusters[2], 'Documents': resulting_clusters[3]})
     df_clusters.to_csv('./' + output_file + '_clusters.csv', index_label='Cluster_ID')
     print("Clustering results printed to '"+ output_file + "_clusters.csv'!")
-    #print(df_clusters)
+    # print(df_clusters)

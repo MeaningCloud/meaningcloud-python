@@ -8,34 +8,19 @@ from os import path
 
 here = path.abspath(path.dirname(__file__))
 
-with open('README.rst') as readme_file:
+with open('README.md') as readme_file:
     readme = readme_file.read()
 
 setup(
 
     name='MeaningCloud-python',
-
-
-    version='1.1.1',
-
-
-    description='Official Python SDK for MeaningCloud API',
-
+    version='1.2.0',
+    description='Official Python SDK for MeaningCloud APIs',
     long_description=readme,
-
-
     url='https://github.com/MeaningCloud/meaningcloud-python',
-
-
     author='MeaningCloud',
-
-
     author_email='support@meaningcloud.com',
-
-
-
     keywords='nlp, MeaningCloud, text analytics',
-
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Programming Language :: Python :: 2',
@@ -50,19 +35,12 @@ setup(
         'Topic :: Scientific/Engineering :: Artificial Intelligence',
         'Topic :: Scientific/Engineering :: Information Analysis'
     ],
-
-
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
-
-
     install_requires=[
         'requests[security]'
     ],
-
-
     extras_require={
         'dev': ['check-manifest'],
         'test': ['coverage'],
     },
-
 )

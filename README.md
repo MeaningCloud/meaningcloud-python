@@ -39,23 +39,29 @@ And we are always available at support@meaningcloud.com
 This SDK currently contains the following:
 
 - **Request**: manages requests to any of MeaningCloud's APIS. It can also be used to directly generate requests without using specific classes .
-    - **LanguageRequest**: models a request to MeaningCloud Language Identification API.
-    - **TopicsRequest**: models a request to MeaningCloud TopicsExtraction API.
     - **ClassRequest**: models a request to MeaningCloud Text Classification API.
-    - **SentimentRequest**: models a request to MeaningCloud Sentiment Analysis API.
+    - **ClusteringRequest**: models a request to MeaningCloud Text Clustering API.
+    - **DeepCategorizationRequest**: models a request to MeaningCloud Deep Categorization API.
+    - **LanguageRequest**: models a request to MeaningCloud Language Identification API.
     - **ParserRequest**: models a request to Meaningcloud Lemmatization, PoS and Parsing API.
+    - **SentimentRequest**: models a request to MeaningCloud Sentiment Analysis API.
+    - **SummarizationRequest**: models a request to Meaningcloud Summarization API.
+    - **TopicsRequest**: models a request to MeaningCloud TopicsExtraction API.
 - **Response**: models a generic response from the MeaningCloud API.
-    - **TopicsResponse**: models a response from the Topic Extraction API, providing auxiliary functions to work with the response, extracting the different types of topics and some of the most used fields in them.
     - **ClassResponse**: models a response from the Text Classification API, providing auxiliary functions to work with the response and extract the different fields in each category.
-    - **SentimentResponse**: models a response from the Sentiment Analysis API, providing auxiliary functions to work with the response and extract the sentiment detected at different levels and for different elements.
+    - **ClusteringResponse**: models a response from the Text Clustering API, providing auxiliary functions to work with the response and extract the different fields in each cluster.
+    - **DeepCategorizationResponse**: models a response from the Deep Categorization API, providing auxiliary functions to work with the response and extract the different fields in each category.
     - **LanguageResponse**: models a response from the Language Identification API, providing auxiliary functions to work with the response and extract the sentiment detected at different levels and for different elements.
     - **ParserResponse**: models a response from the Lemmatization, PoS and Parsing API, providing auxiliary functions to work with the response and extract the lemmatization and PoS tagging of the text provided.
+    - **SentimentResponse**: models a response from the Sentiment Analysis API, providing auxiliary functions to work with the response and extract the sentiment detected at different levels and for different elements.
+    - **SummarizationResponse**: models a response from the Summarization API, providing auxiliary functions to work with the response and obtain the summary extracted.
+    - **TopicsResponse**: models a response from the Topic Extraction API, providing auxiliary functions to work with the response, extracting the different types of topics and some of the most used fields in them.
    
 ### Usage
 
 In the _example_ folder, there are two examples:
 - **Client.py**, which contains a simple example on how to use the SDK
-- **mc_showcase**, which implements a pipeline where plain text files are read from a folder, and two CSV files result as output: one with several types of analyses done over each text, and the results from running Text Clustering over the complete collection.
+- **mc_showcase**, which implements a pipeline where plain text files are read from a folder, and two CSV files result as output: one with several types of analyses done over each text, and the results from running [Text Clustering](https://www.meaningcloud.com/developer/text-clustering) over the complete collection.
     The analyses done are:
 
   * [Language Identification](https://www.meaningcloud.com/developer/language-identification): detects the language and returns code or name
