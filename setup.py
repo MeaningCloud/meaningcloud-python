@@ -17,6 +17,7 @@ setup(
     version='1.2.0',
     description='Official Python SDK for MeaningCloud APIs',
     long_description=readme,
+    long_description_content_type='text/markdown',
     url='https://github.com/MeaningCloud/meaningcloud-python',
     author='MeaningCloud',
     author_email='support@meaningcloud.com',
