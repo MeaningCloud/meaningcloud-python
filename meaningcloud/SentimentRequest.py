@@ -2,12 +2,12 @@ import meaningcloud.Request
 
 
 class SentimentRequest(meaningcloud.Request):
-    URL = 'https://api.meaningcloud.com/sentiment-2.1'
+    endpoint = 'sentiment-2.1'
     otherparams = None
     extraheaders = None
     type_ = ""
 
-    def __init__(self, key, lang=None, txt=None, txtf='plain', url=None, doc=None, otherparams=None, extraheaders=None):
+    def __init__(self, key, lang=None, txt=None, txtf='plain', url=None, doc=None, otherparams=None, extraheaders=None, server='https://api.meaningcloud.com/'):
         """
         SentimentRequest constructor
 
@@ -27,14 +27,19 @@ class SentimentRequest(meaningcloud.Request):
             Array where other params can be added to be used in the API call
         :param extraheaders:
             Array where other headers can be added to be used in the request
+        :param server:
+            String with the server the requests will be sent to
         """
 
+        if server[len(server)-1] != '/':
+            server += '/'
+
         self._params = {}
-        meaningcloud.Request.__init__(self, self.URL, key)
+        meaningcloud.Request.__init__(self, (server + self.endpoint), key)
 
         self.otherarams = otherparams
         self.extraheaders = extraheaders
-        self._url = self.URL
+        self._url = server + self.endpoint
 
         self.addParam('key', key)
         self.addParam('lang', lang)
