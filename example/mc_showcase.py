@@ -24,6 +24,9 @@ number_categories = 3
 # @param topics_relevance - Relevance used for filtering entities and concepts
 topics_relevance = 80
 
+# @param cluster_score_threshold - Relative score used for filtering clusters
+cluster_score_threshold = 50
+
 # auxiliary variables to follow progress of the process
 index_count = 1
 total_files = None
@@ -153,17 +156,24 @@ def getSummarization(text, sentences):
 
 
 # This function obtains the text clustering of the text collection passed as a parameter
-def getClustering(text_collection):
+def getClustering(text_collection, cluster_score_threshold):
 
     # We are going to make a request to the Clustering API
     print("Getting clustering analysis...")
     clustering_response = meaningcloud.ClusteringResponse(meaningcloud.ClusteringRequest(license_key, lang='en', texts=text_collection).sendReq())
     if clustering_response.isSuccessful():
         clusters = clustering_response.getClusters()
-        titles = [clustering_response.getClusterTitle(cl) for cl in clusters]
-        sizes = [clustering_response.getClusterSize(cl) for cl in clusters]
-        scores = [clustering_response.getClusterScore(cl) for cl in clusters]
-        docs = [', '.join(cl['document_list'].keys()) for cl in clusters]
+        maximum_score = float(clustering_response.getClusterScore(clusters[0])) #first one has higher score
+        titles = []
+        sizes = []
+        scores = []
+        docs = []
+        for cl in clusters:
+            if (float(clustering_response.getClusterScore(cl))/maximum_score)*100 >= cluster_score_threshold:
+                titles.append(clustering_response.getClusterTitle(cl))
+                sizes.append(clustering_response.getClusterSize(cl))
+                scores.append(clustering_response.getClusterScore(cl))
+                docs.append(', '.join(cl['document_list'].keys()))
         return titles, sizes, scores, docs
     else:
         print('Request to clustering was not succesful: (' + clustering_response.getStatusCode() + ') ' + clustering_response.getStatusMsg())
@@ -246,7 +256,7 @@ if __name__ == "__main__":
 
 
     # Cluster all files
-    resulting_clusters = getClustering(input_files)
+    resulting_clusters = getClustering(input_files, cluster_score_threshold)
     df_clusters = pd.DataFrame( {'Cluster_Name': resulting_clusters[0], 'Size': resulting_clusters[1], 'Score': resulting_clusters[2], 'Documents': resulting_clusters[3]})
     df_clusters.to_csv('./' + output_file + '_clusters.csv', index_label='Cluster_ID')
     print("Clustering results printed to '"+ output_file + "_clusters.csv'!")
