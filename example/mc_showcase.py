@@ -169,7 +169,7 @@ def getClustering(text_collection, cluster_score_threshold):
         scores = []
         docs = []
         for cl in clusters:
-            if (float(clustering_response.getClusterScore(cl))/maximum_score)*100 >= cluster_score_threshold:
+            if (maximum_score == 0 or (float(clustering_response.getClusterScore(cl))/maximum_score)*100 >= cluster_score_threshold):
                 titles.append(clustering_response.getClusterTitle(cl))
                 sizes.append(clustering_response.getClusterSize(cl))
                 scores.append(clustering_response.getClusterScore(cl))
