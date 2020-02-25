@@ -60,8 +60,9 @@ This SDK currently contains the following:
 ### Usage
 
 In the _example_ folder, there are two examples:
-- **Client.py**, which contains a simple example on how to use the SDK
-- **mc_showcase**, which implements a pipeline where plain text files are read from a folder, and two CSV files result as output: one with several types of analyses done over each text, and the results from running [Text Clustering](https://www.meaningcloud.com/developer/text-clustering) over the complete collection.
+- **Client.py**, which contains a simple example on how to use the SDK.
+- **mc_rapidminer.py**, which contains a script you can run from RapidMiner using the [Python scripting extension](https://docs.rapidminer.com/latest/studio/operators/utility/scripting/execute_python.html)
+- **mc_showcase.py**, which implements a pipeline where plain text files are read from a folder, and two CSV files result as output: one with several types of analyses done over each text, and the results from running [Text Clustering](https://www.meaningcloud.com/developer/text-clustering) over the complete collection.
     The analyses done are:
 
   * [Language Identification](https://www.meaningcloud.com/developer/language-identification): detects the language and returns code or name
