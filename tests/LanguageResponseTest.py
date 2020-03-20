@@ -31,6 +31,14 @@ class LanguageResponseTest(unittest.TestCase):
     def testGetNonexistentLanguages(self):
         self.assertEqual(len(self.empty_response.getLanguages()), 0)
 
+    def testGetFirstLanguage(self):
+        language = self.response.getFirstLanguage()
+        self.assertIsNotNone(language)
+
+    def testGetNonExistentFirstLanguage(self):
+        language = self.empty_response.getFirstLanguage()
+        self.assertEqual(len(language), 0)
+
     def testGetLanguageCode(self):
         languages = self.response.getLanguages()
         language = languages[0] if((len(languages) > 0) and (languages[0] is not None)) else []

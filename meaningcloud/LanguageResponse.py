@@ -28,6 +28,19 @@ class LanguageResponse(meaningcloud.Response):
                 if (('language_list' in self._response.keys()) and (self._response['language_list'] is not None))
                 else {})
 
+    def getFirstLanguage(self):
+        """
+        Get first language returned for the analyzed text
+
+        :return:
+            Array with the field of the language detected
+        """
+
+        languages = (self._response['language_list']
+                if (('language_list' in self._response.keys()) and (self._response['language_list'] is not None))
+                else {})
+        return languages[0] if((len(languages) > 0) and (languages[0] is not None)) else []
+
     def getLanguageCode(self, language):
         """
         Get the code of a language

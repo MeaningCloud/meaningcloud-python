@@ -138,10 +138,10 @@ try:
     # If there are no errors in the request, we will use the language detected to make a request to Sentiment and Topics
     if lang_response.isSuccessful():
         print("\nThe request to 'Language Identification' finished successfully!\n")
-        languages = lang_response.getLanguages()
-        if languages:
-            language = lang_response.getLanguageCode(languages[0])
-            print("\tLanguage detected: " + lang_response.getLanguageName(languages[0]) + ' (' + language + ")\n")
+        first_lang = lang_response.getFirstLanguage()
+        if first_lang:
+            language = lang_response.getLanguageCode(first_lang)
+            print("\tLanguage detected: " + lang_response.getLanguageName(first_lang) + ' (' + language + ")\n")
         else:
             print("\tNo language detected!\n")
 

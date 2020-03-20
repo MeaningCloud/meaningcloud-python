@@ -14,7 +14,7 @@ with open('README.md') as readme_file:
 setup(
 
     name='MeaningCloud-python',
-    version='1.2.1',
+    version='1.2.2',
     description='Official Python SDK for MeaningCloud APIs',
     long_description=readme,
     long_description_content_type='text/markdown',

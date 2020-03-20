@@ -174,6 +174,21 @@ class TopicsResponse(meaningcloud.Response):
             lastNode = aType[len(aType) - 1]
         return lastNode
 
+    def getTypeFirstNode(self, type_):
+        """
+        Obtains the firstlevel node of the type specified
+        :param type_:
+            Type we want to analize (sementity, semtheme)
+        :return:
+            First node of the type (or Top if there's no first type)
+        """
+
+        firstNode = ""
+        if type_ and (type(type_) is not list) and (type(type_) is not dict):
+            aType = type_.split('>')
+            firstNode = aType[1] if len(aType)>1 else aType[0]
+        return firstNode
+
     def getNumberOfAppearances(self, topic):
         """
         Gets the number of appearances of a topic

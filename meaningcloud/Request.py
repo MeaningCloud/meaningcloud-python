@@ -105,8 +105,8 @@ class Request:
         :return:
             Response object set to None if there is an error
         """
-
-        self.addParam('src', 'mc-python')
+        if not 'src' in self._params.keys():
+            self.addParam('src', 'mc-python')
 
         params = urlencode(self._params)
 

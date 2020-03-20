@@ -141,6 +141,30 @@ class TopicsResponseTest(unittest.TestCase):
         wrongFormatArray = self.response.getTypeLastNode({'dummy_key': 'dummy_value'})
         self.assertEqual(wrongFormatArray, "")
 
+    def testGetTypeFirstNode(self):
+        # correct_values
+        firstEntityFirstNode = self.response.getTypeFirstNode(self.response.getOntoType(self.response.getEntities()[0]))
+        self.assertIsNotNone(firstEntityFirstNode)
+        self.assertEqual(firstEntityFirstNode, 'Location')
+
+        firstConceptFirstNode = self.response.getTypeFirstNode(self.response.getOntoType(self.response.getConcepts()[0]))
+        self.assertIsNotNone(firstConceptFirstNode)
+        self.assertEqual(firstConceptFirstNode, 'Location')
+
+        responseNoFirstNode = '{"status":{"code":"0","msg":"OK","credits":"1","remaining_credits":"5000"},"entity_list":[{"form":"DummyTopValue","id":"__madeUpID","sementity":{"class":"instance","id":"__madeupValue","type":"Top"},"variant_list":[{"form":"DummyTopValue","inip":"0","endp":"12"}],"relevance":"100"}]}'
+        localResponse = meaningcloud.TopicsResponse(responseNoFirstNode)
+        localFirstEntityFirstNode = localResponse.getTypeFirstNode(localResponse.getOntoType(localResponse.getEntities()[0]))
+        self.assertIsNotNone(localFirstEntityFirstNode)
+        self.assertEqual(localFirstEntityFirstNode, 'Top')
+
+        # wrong_values
+        wrongFormat = self.response.getTypeLastNode('dummy_value')
+        self.assertEqual(wrongFormat, 'dummy_value')
+
+        wrongFormatArray = self.response.getTypeLastNode({'dummy_key': 'dummy_value'})
+        self.assertEqual(wrongFormatArray, "")
+
+
     def testIsUserDefined(self):
         self.assertEqual(self.response.isUserDefined(self.response.getEntities()[0]), False)
         self.assertEqual(self.response.isUserDefined(self.response.getConcepts()[0]), False)
