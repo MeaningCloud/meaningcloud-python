@@ -125,7 +125,7 @@ class Request:
             headers = {'Content-Type': 'application/x-www-form-urlencoded'}
             if (extraHeaders is not None) and (extraHeaders is dict):
                 headers = headers.update(extraHeaders)
-            result = requests.request("POST", url=url, data=params, headers=headers)
+            result = requests.request("POST", url=url, data=params, headers=headers, timeout=self._timeout)
             result.encoding = 'utf-8'
             return result
 
