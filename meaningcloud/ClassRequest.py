@@ -3,12 +3,14 @@ import meaningcloud.Request
 
 class ClassRequest(meaningcloud.Request):
 
-    endpoint = 'class-1.1'
+    endpoint = 'class-2.0'
     otherparams = None
     extraheaders = None
     type_ = ""
 
-    def __init__(self, key, txt=None, url=None, doc=None, model='IPTC_en', otherparams=None, extraheaders=None, server='https://api.meaningcloud.com/'):
+    def __init__(self, key, model='IPTC_en', txt=None, url=None, doc=None,
+                 otherparams=None, extraheaders=None,
+                 server='https://api.meaningcloud.com/'):
         """
         ClassRequest constructor
 
@@ -33,7 +35,7 @@ class ClassRequest(meaningcloud.Request):
 
         self._params = {}
         meaningcloud.Request.__init__(self, (server + self.endpoint), key)
-        self.otherarams = otherparams
+        self.otherparams = otherparams
         self.extraheaders = extraheaders
         self._url = server + self.endpoint
 
