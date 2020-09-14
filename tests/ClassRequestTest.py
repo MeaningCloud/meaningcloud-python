@@ -3,7 +3,7 @@ import meaningcloud
 
 
 class ClassRequestTest(unittest.TestCase):
-    URL = 'https://api.meaningcloud.com/class-1.1'
+    URL = 'https://api.meaningcloud.com/class-2.0'
     KEY = 'MY_KEY'
     TIMEOUT_DEFAULT = 60
     RESOURCES_DIR = './resources/'
